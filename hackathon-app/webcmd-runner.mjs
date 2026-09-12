@@ -102,10 +102,27 @@ export async function extractHackerNewsTop5(onStatus = () => {}) {
     notify('Opening Hacker News (https://news.ycombinator.com)...', 'navigating');
 
     const extractScript = `
-      await page.goto('https://news.ycombinator.com', { waitUntil: 'domcontentloaded' });
+      await page.goto('https://news.ycombinator.com', { waitUntil: 'commit' });
       
-      const stories = await page.evaluate(() => {
-        const rows = document.querySelectorAll('tr.athing');
+      return await page.evaluate(async () => {
+        let rows = document.querySelectorAll('tr.athing');
+        if (rows.length === 0) {
+          await new Promise((resolve) => {
+            const observer = new MutationObserver(() => {
+              if (document.querySelector('tr.athing')) {
+                observer.disconnect();
+                resolve();
+              }
+            });
+            observer.observe(document.documentElement, { childList: true, subtree: true });
+            setTimeout(() => {
+              observer.disconnect();
+              resolve();
+            }, 5000);
+          });
+          rows = document.querySelectorAll('tr.athing');
+        }
+
         const items = [];
         
         for (let i = 0; i < Math.min(5, rows.length); i++) {
@@ -158,14 +175,12 @@ export async function extractHackerNewsTop5(onStatus = () => {}) {
             });
           }
         }
-        return items;
+        return {
+          url: window.location.href,
+          title: document.title,
+          stories: items
+        };
       });
-      
-      return { 
-        url: page.url(),
-        title: await page.title(),
-        stories: stories 
-      };
     `;
 
     notify('Extracting top 5 stories and metadata...', 'extracting');
