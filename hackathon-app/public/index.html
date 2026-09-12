@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Daily Work Navigator — Webcmd Browser Automation</title>
+  <meta name="description" content="Autonomous Daily Work Automation Agent powered by Webcmd browser engine." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="glow-bg"></div>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="logo-group">
+        <div class="logo-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+            <line x1="8" y1="21" x2="16" y2="21"></line>
+            <line x1="12" y1="17" x2="12" y2="21"></line>
+          </svg>
+        </div>
+        <div>
+          <h1 class="app-title">Daily Work Navigator</h1>
+          <p class="app-subtitle">Autonomous Daily Intelligence & Browser Automation powered by Webcmd</p>
+        </div>
+      </div>
+      <div class="header-badges">
+        <span class="badge badge-pulse"><span class="pulse-dot"></span> Webcmd Core v0.8.4</span>
+        <span class="badge badge-accent">Cloak Stealth Browser</span>
+        <span class="badge badge-neutral">Port :9777 Daemon</span>
+      </div>
+    </header>
+
+    <!-- Main Content Grid -->
+    <main class="main-grid">
+      <!-- Left Column: Task Launcher & Results -->
+      <section class="action-column">
+        <!-- Task Card -->
+        <div class="card task-card">
+          <div class="card-header">
+            <div class="card-tag">DAILY WORKFLOW #1</div>
+            <h2 class="card-title">Hacker News Morning Briefing</h2>
+            <p class="card-desc">
+              Executes a deterministic Webcmd browser session to navigate to Hacker News, extract the top 5 stories with metadata, and cleanly release the browser lease.
+            </p>
+          </div>
+
+          <div class="task-details">
+            <div class="detail-item">
+              <span class="detail-label">Target URL</span>
+              <span class="detail-value">news.ycombinator.com</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Task Objective</span>
+              <span class="detail-value">Top 5 Stories (Title + URL)</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Session Lifecycle</span>
+              <span class="detail-value">Isolated Ephemeral Window</span>
+            </div>
+          </div>
+
+          <div class="action-bar">
+            <button id="runTaskBtn" class="btn btn-primary">
+              <span class="btn-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                  <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>
+              </span>
+              <span id="btnText">Run Hacker News Briefing</span>
+              <span class="spinner" id="btnSpinner"></span>
+            </button>
+            <div class="status-summary" id="statusSummary">
+              Ready to execute
+            </div>
+          </div>
+        </div>
+
+        <!-- Results Display -->
+        <div class="card results-card" id="resultsCard">
+          <div class="results-header">
+            <div class="results-title-group">
+              <h3 class="results-title">Extracted Stories</h3>
+              <span class="results-count-badge" id="resultsCount">0 items</span>
+            </div>
+            <div class="results-actions">
+              <button id="copyMdBtn" class="btn-ghost" title="Copy as Markdown">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+                Copy Markdown
+              </button>
+            </div>
+          </div>
+
+          <!-- Stories Container -->
+          <div class="stories-list" id="storiesList">
+            <div class="empty-state">
+              <div class="empty-icon">📰</div>
+              <p class="empty-title">No stories extracted yet</p>
+              <p class="empty-subtitle">Click "Run Hacker News Briefing" above to trigger Webcmd automation.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right Column: Live Webcmd Activity Console -->
+      <section class="console-column">
+        <div class="card terminal-card">
+          <div class="terminal-header">
+            <div class="terminal-dots">
+              <span class="dot dot-red"></span>
+              <span class="dot dot-yellow"></span>
+              <span class="dot dot-green"></span>
+            </div>
+            <div class="terminal-title">Webcmd Browser Activity Log</div>
+            <div class="terminal-status">
+              <span class="status-indicator" id="consoleIndicator"></span>
+              <span id="consoleStatusText">IDLE</span>
+            </div>
+          </div>
+
+          <div class="terminal-body" id="terminalBody">
+            <div class="log-entry log-system">
+              <span class="log-time">[System]</span>
+              <span class="log-msg">Daily Work Navigator initialized. Ready for automation triggers.</span>
+            </div>
+            <div class="log-entry log-system">
+              <span class="log-time">[Engine]</span>
+              <span class="log-msg">Connected to Webcmd daemon on port 9777. QuickJS Playwright sandbox ready.</span>
+            </div>
+          </div>
+
+          <div class="terminal-footer">
+            <div class="stat-pill">
+              <span class="stat-label">Elapsed:</span>
+              <span class="stat-val" id="elapsedVal">0.0s</span>
+            </div>
+            <div class="stat-pill">
+              <span class="stat-label">Session ID:</span>
+              <span class="stat-val" id="sessionVal">—</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- App Footer -->
+    <footer class="app-footer">
+      <span>Built for Slab Hackathon 2026</span>
+      <span>•</span>
+      <span>Powered by <a href="https://webcmd.dev" target="_blank" rel="noreferrer">Webcmd</a></span>
+      <span>•</span>
+      <span class="footer-safe">Webcmd Core Untouched</span>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
