@@ -93,7 +93,7 @@ export async function runSelfHealingWorkflow(onStatus = () => {}) {
     });
   };
 
-  const portalUrl = 'http://127.0.0.1:3000/portal';
+  const portalUrl = `http://127.0.0.1:${process.env.PORT || 3000}/portal`;
   const siteDomain = 'daily-portal.test';
   const siteUrl = `http://${siteDomain}/`;
 
@@ -144,7 +144,7 @@ export async function runSelfHealingWorkflow(onStatus = () => {}) {
     notify(`Browser session created: ${session1Id}`, 'session_ready', 1);
 
     // 4. Navigate & Attempt remembered path
-    notify('Navigating to http://127.0.0.1:3000/portal...', 'navigating', 1);
+    notify(`Navigating to ${portalUrl}...`, 'navigating', 1);
     notify('Attempting remembered path: Click #btn-daily-briefing...', 'attempt_stale', 1);
 
     const attemptScript = `

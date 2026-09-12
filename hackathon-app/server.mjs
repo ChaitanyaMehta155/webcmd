@@ -8,6 +8,7 @@ import { runSelfHealingWorkflow } from './self-healing-runner.mjs';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PUBLIC_DIR = path.join(__dirname, 'public');
 const PORT = process.env.PORT || 3000;
+const HOST = process.env.HOST || '0.0.0.0';
 
 const MIME_TYPES = {
   '.html': 'text/html; charset=utf-8',
@@ -151,10 +152,10 @@ const server = http.createServer(async (req, res) => {
   });
 });
 
-server.listen(PORT, '127.0.0.1', () => {
+server.listen(PORT, HOST, () => {
   console.log(`\n======================================================`);
   console.log(`  Daily Work Navigator (Webcmd Hackathon App)`);
-  console.log(`  Running on: http://127.0.0.1:${PORT}`);
+  console.log(`  Running on: http://${HOST}:${PORT}`);
   console.log(`  Engine: Webcmd CLI & Daemon (Cloak Chromium)`);
   console.log(`======================================================\n`);
 });
