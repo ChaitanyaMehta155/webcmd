@@ -172,7 +172,7 @@ export async function extractHackerNewsTop5(onStatus = () => {}) {
     const runRes = await runWebcmd(
       ['--session', sessionId, 'browser', 'run', '--stdin', '--no-snapshot-diff', '-f', 'json'],
       extractScript,
-      45000
+      120000
     );
 
     const stories = runRes?.result?.stories || [];
