@@ -55,15 +55,17 @@ ENV NODE_ENV=production \
     DISPLAY=:99 \
     CLOAKBROWSER_CACHE_DIR=/root/.cloakbrowser
 
-# Copy package manifests and install dependencies natively inside the Linux container
-COPY package.json package-lock.json ./
-RUN npm ci
-
-# Copy application build artifacts, skills, manifests, and hackathon app
-COPY dist/ ./dist/
+# Copy project configuration, source code, build scripts, and application files into container
+COPY package.json package-lock.json tsconfig.json cli-manifest.json plugin-catalog.json ./
+COPY src/ ./src/
+COPY scripts/ ./scripts/
 COPY skills/ ./skills/
-COPY cli-manifest.json ./
 COPY hackathon-app/ ./hackathon-app/
+
+# Install dependencies (including build tools), compile dist/, and prune devDependencies
+RUN npm ci --include=dev && \
+    npm run build && \
+    npm prune --omit=dev
 
 # Normalize entrypoint script line endings and set execute permissions
 RUN sed -i 's/\r$//' hackathon-app/docker-entrypoint.sh && \
