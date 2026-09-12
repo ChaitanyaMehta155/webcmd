@@ -39,7 +39,7 @@
     <main class="main-grid">
       <!-- Left Column: Task Launcher & Results -->
       <section class="action-column">
-        <!-- Task Card -->
+        <!-- Task Card #1: Hacker News Briefing -->
         <div class="card task-card">
           <div class="card-header">
             <div class="card-tag">DAILY WORKFLOW #1</div>
@@ -76,6 +76,86 @@
             </button>
             <div class="status-summary" id="statusSummary">
               Ready to execute
+            </div>
+          </div>
+        </div>
+
+        <!-- Task Card #2: Self-Healing Work Portal -->
+        <div class="card task-card healing-card">
+          <div class="card-header">
+            <div class="card-tag tag-healing">DAILY WORKFLOW #2 (SELF-HEALING)</div>
+            <div class="card-title-row">
+              <h2 class="card-title">Self-Healing Work Portal</h2>
+              <a href="/portal" target="_blank" class="portal-link" title="Open demo portal in new tab">View Live Portal ↗</a>
+            </div>
+            <p class="card-desc">
+              Demonstrates Webcmd's self-learning navigation: when an internal work portal relocates its "Daily Briefing" action into a "More Tools" dropdown, Webcmd detects the stale path, inspects the live page, discovers the relocated action, updates site memory, and executes without exploration on Run 2.
+            </p>
+          </div>
+
+          <div class="task-details">
+            <div class="detail-item">
+              <span class="detail-label">Remembered Path</span>
+              <span class="detail-value text-stale">#btn-daily-briefing (Stale)</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Live Portal State</span>
+              <span class="detail-value text-repaired">Relocated under More Tools</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Self-Healing</span>
+              <span class="detail-value text-highlight">Git Checkpoint Repair</span>
+            </div>
+          </div>
+
+          <div class="action-bar">
+            <button id="runHealingBtn" class="btn btn-healing">
+              <span class="btn-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path>
+                </svg>
+              </span>
+              <span id="healingBtnText">Run Self-Healing Demo</span>
+              <span class="spinner" id="healingSpinner"></span>
+            </button>
+            <div class="status-summary" id="healingStatusSummary">
+              Ready to demonstrate recovery
+            </div>
+          </div>
+
+          <!-- Recovery Progression Tracker -->
+          <div class="healing-steps-tracker" id="healingTracker" style="display: none;">
+            <div class="step-badge" id="step-memory">1. Memory Loaded</div>
+            <div class="step-badge" id="step-attempt">2. Remembered Path</div>
+            <div class="step-badge" id="step-failed">3. Stale Detected</div>
+            <div class="step-badge" id="step-inspect">4. Live Inspection</div>
+            <div class="step-badge" id="step-recovered">5. Path Repaired</div>
+            <div class="step-badge" id="step-checkpoint">6. Memory Updated</div>
+            <div class="step-badge" id="step-run2">7. Run 2 Accelerated</div>
+          </div>
+
+          <!-- Run Comparison Panel -->
+          <div class="comparison-panel" id="comparisonPanel" style="display: none;">
+            <h4 class="comparison-title">Webcmd Execution Comparison</h4>
+            <div class="comparison-grid">
+              <!-- Run 1 Card -->
+              <div class="comp-box comp-run1">
+                <div class="comp-tag tag-run1">RUN 1 (INITIAL FAILURE & RECOVERY)</div>
+                <div class="comp-row"><span class="comp-k">Remembered Path:</span> <span class="comp-v stale-text">#btn-daily-briefing (Failed)</span></div>
+                <div class="comp-row"><span class="comp-k">Fallback Action:</span> <span class="comp-v">Live Accessibility Scan</span></div>
+                <div class="comp-row"><span class="comp-k">Discovered Path:</span> <span class="comp-v highlight-text">#nav-more-tools → #menu-daily-briefing</span></div>
+                <div class="comp-row"><span class="comp-k">Site Memory:</span> <span class="comp-v success-text">Updated & Checkpointed to Git</span></div>
+                <div class="comp-metrics" id="run1Metrics"></div>
+              </div>
+              <!-- Run 2 Card -->
+              <div class="comp-box comp-run2">
+                <div class="comp-tag tag-run2">RUN 2 (REPAIRED MEMORY REUSE)</div>
+                <div class="comp-row"><span class="comp-k">Loaded Rule:</span> <span class="comp-v">More Tools Dropdown (Verified)</span></div>
+                <div class="comp-row"><span class="comp-k">Exploration:</span> <span class="comp-v success-text">0 Failed Attempts / 0 Exploration</span></div>
+                <div class="comp-row"><span class="comp-k">Execution Mode:</span> <span class="comp-v success-text">Direct 1st-Attempt Success</span></div>
+                <div class="comp-row"><span class="comp-k">Task Outcome:</span> <span class="comp-v success-text">Completed</span></div>
+                <div class="comp-metrics" id="run2Metrics"></div>
+              </div>
             </div>
           </div>
         </div>

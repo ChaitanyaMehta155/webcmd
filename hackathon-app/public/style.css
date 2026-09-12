@@ -641,6 +641,209 @@ body {
   color: var(--accent-emerald);
 }
 
+/* Self-Healing Workflow Card */
+.healing-card {
+  border-color: rgba(16, 185, 129, 0.2);
+  margin-bottom: 24px;
+}
+
+.healing-card:hover {
+  border-color: rgba(16, 185, 129, 0.4);
+}
+
+.tag-healing {
+  color: var(--accent-emerald) !important;
+}
+
+.card-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.portal-link {
+  font-size: 0.8rem;
+  font-family: var(--font-mono);
+  color: #38bdf8;
+  text-decoration: none;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  padding: 2px 8px;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.portal-link:hover {
+  background: rgba(56, 189, 248, 0.1);
+  color: #7dd3fc;
+}
+
+.text-stale {
+  color: var(--accent-rose) !important;
+}
+
+.text-repaired {
+  color: #38bdf8 !important;
+}
+
+.text-highlight {
+  color: var(--accent-emerald) !important;
+}
+
+.btn-healing {
+  background: linear-gradient(135deg, #059669, #0d9488);
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.25);
+}
+
+.btn-healing:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+  background: linear-gradient(135deg, #10b981, #0f766e);
+}
+
+.btn-healing:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Steps Tracker */
+.healing-steps-tracker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 18px;
+  padding: 12px 14px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.step-badge {
+  font-size: 0.72rem;
+  font-family: var(--font-mono);
+  padding: 4px 9px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-faint);
+  border: 1px solid transparent;
+  transition: all 0.25s ease;
+}
+
+.step-badge.active {
+  background: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+  border-color: rgba(245, 158, 11, 0.4);
+  animation: pulse 1.2s infinite;
+}
+
+.step-badge.done {
+  background: rgba(16, 185, 129, 0.12);
+  color: #34d399;
+  border-color: rgba(16, 185, 129, 0.3);
+}
+
+.step-badge.failed {
+  background: rgba(244, 63, 94, 0.15);
+  color: #fb7185;
+  border-color: rgba(244, 63, 94, 0.4);
+}
+
+/* Comparison Panel */
+.comparison-panel {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-subtle);
+  animation: fadeIn 0.3s ease;
+}
+
+.comparison-title {
+  font-size: 0.88rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+.comparison-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+@media (max-width: 640px) {
+  .comparison-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.comp-box {
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.comp-run1 {
+  border-left: 3px solid var(--accent-amber);
+}
+
+.comp-run2 {
+  border-left: 3px solid var(--accent-emerald);
+}
+
+.comp-tag {
+  font-size: 0.68rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  margin-bottom: 4px;
+}
+
+.tag-run1 { color: #fbbf24; }
+.tag-run2 { color: #34d399; }
+
+.comp-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 0.78rem;
+  gap: 8px;
+}
+
+.comp-k {
+  color: var(--text-faint);
+  flex-shrink: 0;
+}
+
+.comp-v {
+  color: var(--text-main);
+  text-align: right;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  word-break: break-word;
+}
+
+.stale-text { color: #f87171 !important; }
+.highlight-text { color: #38bdf8 !important; }
+.success-text { color: #4ade80 !important; }
+
+.comp-metrics {
+  margin-top: 6px;
+  padding-top: 8px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.08);
+  display: flex;
+  gap: 8px;
+  font-size: 0.72rem;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+}
+
 /* Animations */
 @keyframes spin {
   to { transform: rotate(360deg); }
@@ -655,3 +858,4 @@ body {
   from { opacity: 0; transform: translateY(3px); }
   to { opacity: 1; transform: translateY(0); }
 }
+

@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { extractHackerNewsTop5 } from './webcmd-runner.mjs';
+import { runSelfHealingWorkflow } from './self-healing-runner.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PUBLIC_DIR = path.join(__dirname, 'public');
@@ -64,6 +65,38 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
+  // SSE Stream Endpoint: /api/run-self-healing-stream
+  if (url.pathname === '/api/run-self-healing-stream' && req.method === 'GET') {
+    res.writeHead(200, {
+      'Content-Type': 'text/event-stream',
+      'Cache-Control': 'no-cache, no-transform',
+      'Connection': 'keep-alive',
+      'X-Accel-Buffering': 'no',
+    });
+
+    const sendEvent = (event, data) => {
+      res.write(`event: ${event}\ndata: ${JSON.stringify(data)}\n\n`);
+    };
+
+    sendEvent('status', { message: 'Connecting to Self-Healing Automation Engine...', step: 'init', phase: 1 });
+
+    try {
+      const result = await runSelfHealingWorkflow((statusUpdate) => {
+        sendEvent('status', statusUpdate);
+      });
+      sendEvent('result', result);
+      sendEvent('done', { ok: true, durationMs: Date.now() });
+    } catch (err) {
+      sendEvent('error', {
+        message: err.message || 'Self-healing workflow failed',
+        code: err.code || 'HEAL_ERROR',
+      });
+    } finally {
+      res.end();
+    }
+    return;
+  }
+
   // REST API Endpoint: /api/run-hn
   if (url.pathname === '/api/run-hn' && (req.method === 'POST' || req.method === 'GET')) {
     try {
@@ -85,8 +118,15 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  // Static File Serving
-  let filePath = path.join(PUBLIC_DIR, url.pathname === '/' ? 'index.html' : url.pathname);
+  // Static File Serving (including /portal -> portal.html)
+  let targetFile = url.pathname;
+  if (targetFile === '/' || targetFile === '') {
+    targetFile = 'index.html';
+  } else if (targetFile === '/portal' || targetFile === '/portal/') {
+    targetFile = 'portal.html';
+  }
+
+  let filePath = path.join(PUBLIC_DIR, targetFile);
   
   // Security check: prevent directory traversal outside public
   if (!filePath.startsWith(PUBLIC_DIR)) {
