@@ -185,7 +185,7 @@ export async function extractHackerNewsTop5(onStatus = () => {}) {
 
     notify('Extracting top 5 stories and metadata...', 'extracting');
     const runRes = await runWebcmd(
-      ['--session', sessionId, 'browser', 'run', '--stdin', '--no-snapshot-diff', '-f', 'json'],
+      ['--session', sessionId, 'browser', 'run', '--stdin', '--no-snapshot-diff', '--timeout', '120', '-f', 'json'],
       extractScript,
       120000
     );
